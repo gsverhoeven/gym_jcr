@@ -8,8 +8,8 @@ See for more information the accompanying blog post at https://gsverhoeven.githu
 
 ## Installation
 ```bash
-git clone git@github.com:gsverhoeven/jacks_car_rental_env.git
-cd gym_jcr
+git clone https://github.com/gsverhoeven/jacks_car_rental_env
+cd jacks_car_rental_env
 pip install .
 ```
 
