@@ -1,4 +1,4 @@
-# jacks_car_rental_env
+# gym_jcr
 
 This repository contains a Gym Environment that implements Jack's Car Rental Problem from the book "Reinforcement Learning" by Sutton & Barto.
 
@@ -8,8 +8,8 @@ See for more information the accompanying blog post at https://gsverhoeven.githu
 
 ## Installation
 ```bash
-git clone https://github.com/gsverhoeven/jacks_car_rental_env
-cd jacks_car_rental_env
+git clone https://github.com/gsverhoeven/gym_jcr
+cd gym_jcr
 pip install .
 ```
 
