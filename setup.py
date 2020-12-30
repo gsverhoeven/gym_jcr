@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='gym_jcr',
-      version='0.0.1',
+      version='0.0.2',
       description='Gym custom env: Jacks Car Rental Problem',
       url='https://github.com/gsverhoeven/jacks_car_rental_env',
       author='Gertjan Verhoeven',

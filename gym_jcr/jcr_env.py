@@ -6,7 +6,7 @@ from gym import utils
 from gym.envs.toy_text import discrete
 
 from scipy.stats import poisson
-from jcr_mdp import *
+from .jcr_mdp import *
 
 MAX_CARS = 20 # maximum # of cars in each location
 MAX_MOVE_OF_CARS = 5 # maximum # of cars to move during night
