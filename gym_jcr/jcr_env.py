@@ -81,4 +81,21 @@ class JacksCarRentalEnv(discrete.DiscreteEnv):
        
         super(JacksCarRentalEnv, self).__init__(nS, nA, P, isd)
 
+        # The following three elements enable this enviroment to be interfaced with
+        # the dynamic programming algorithms of the doctrina library:
+        # https://github.com/rhalbersma/doctrina/blob/master/src/doctrina/algorithms/dp.py
+        # https://github.com/rhalbersma/doctrina/blob/master/exercises/dp-gym_jcr.ipynb
+
+        # Equation (3.4) in Sutton & Barto (p.49):
+        # p(s'|s, a) = probability of transition to state s', from state s taking action a.
+        self.transition = Ptrans.transpose(1, 2, 0)
+        assert np.isclose(self.transition.sum(axis=2), 1).all()
+        
+        # Equation (3.5) in Sutton & Barto (p.49):
+        # r(s, a) = expected immediate reward from state s after action a.        
+        self.reward = R
+        
+        # The number of all states plus the terminal state, denoted |S+|.
+        # For a continuing task as Jack's Car Rental, this is the same as the number of all non-terminal states |S|. 
+        self.nSp = self.nS
 
