@@ -56,29 +56,38 @@ class JacksCarRentalEnv(discrete.DiscreteEnv):
         # can be MAX_CARS at each location A, B
         nS = (MAX_CARS + 1)**2
         
-        P = {s : {a : [] for a in range(nA)} for s in range(nS)}
-               
-        # prob, next_state, reward, done
-        for s in range(nS):
-            # need a state vec to extract correct probs from Ptrans
-            state_vec = np.zeros(nS)
-            state_vec[s] = 1
-            for a in range(nA):
-                prob_vec = np.dot(Ptrans[:,:,a], state_vec)
-                li = P[s][a]
-                # add rewards for all transitions
-                for ns in range(nS):
-                    li.append((prob_vec[ns], ns, R[s][a], False))
-
-        
         # obtain one-step dynamics for dynamic programming setting
-        self.P = P
-        
-        # isd initial state dist 
-        isd = np.ones(nS)/nS
-        
-        self.P = P
+        P = {
+            s: {
+                a: [
+                    (Ptrans[next, s, a], next, R[s, a], False)
+                    for next in range(nS)
+                ]
+                for a in range(nA)
+            }
+            for s in range(nS)
+        }
        
+        # isd initial state dist 
+        isd = np.full(nS, 1 / nS)
+              
         super(JacksCarRentalEnv, self).__init__(nS, nA, P, isd)
 
+        # The following three elements enable this enviroment to be interfaced with
+        # the dynamic programming algorithms of the doctrina library:
+        # https://github.com/rhalbersma/doctrina/blob/master/src/doctrina/algorithms/dp.py
+        # https://github.com/rhalbersma/doctrina/blob/master/exercises/dp-gym_jcr.ipynb
+
+        # Equation (3.4) in Sutton & Barto (p.49):
+        # p(s'|s, a) = probability of transition to state s', from state s taking action a.
+        self.transition = Ptrans.transpose(1, 2, 0)
+        assert np.isclose(self.transition.sum(axis=2), 1).all()
+        
+        # Equation (3.5) in Sutton & Barto (p.49):
+        # r(s, a) = expected immediate reward from state s after action a.        
+        self.reward = R
+        
+        # The number of all states plus the terminal state, denoted |S+|.
+        # For a continuing task as Jack's Car Rental, this is the same as the number of all non-terminal states |S|. 
+        self.nSp = self.nS
 
