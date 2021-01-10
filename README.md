@@ -17,6 +17,6 @@ In your gym environment:
 
 ```python
 import gym_jcr
-env = gym.make("JacksCarRentalEnv-v0") 
+env = gym.make("JacksCarRental-v0") 
 ```
 
