@@ -1,12 +1,10 @@
 from gym.envs.registration import register
 
-from .jcr_env import JacksCarRentalEnv
+environments = [['JacksCarRental', 'v0']]
 
-environments = [['JacksCarRentalEnv', 'v0']]
-
-for environment in environments:
+for name, version in environments:
     register(
-        id='{}-{}'.format(environment[0], environment[1]),
-        entry_point='gym_jcr:{}'.format(environment[0]),
+        id=f'{name}-{version}',
+        entry_point=f'gym_jcr.jcr_env:{name}Env',
     )
 
