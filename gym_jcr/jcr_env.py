@@ -71,6 +71,10 @@ class JacksCarRentalEnv(discrete.DiscreteEnv):
         # isd initial state dist 
         isd = np.full(nS, 1 / nS)
               
+        # This allows easier plotting of policy and value functions:
+        # e.g. V.reshape(env.observation_shape) will give a 21x21 matrix
+        observation_shape = (MAX_CARS + 1, MAX_CARS + 1)
+
         super(JacksCarRentalEnv, self).__init__(nS, nA, P, isd)
 
         # The following three elements enable this enviroment to be interfaced with
@@ -86,8 +90,4 @@ class JacksCarRentalEnv(discrete.DiscreteEnv):
         # Equation (3.5) in Sutton & Barto (p.49):
         # r(s, a) = expected immediate reward from state s after action a.        
         self.reward = R
-        
-        # The number of all states plus the terminal state, denoted |S+|.
-        # For a continuing task as Jack's Car Rental, this is the same as the number of all non-terminal states |S|. 
-        self.nSp = self.nS
 
